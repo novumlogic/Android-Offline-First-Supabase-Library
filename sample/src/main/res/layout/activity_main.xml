@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="java.util.Locale"/>
+        <import type="java.text.DateFormat"/>
+        <variable
+            name="todayDate"
+            type="java.util.Date" />
+        <variable
+            name="viewmodel"
+            type="com.novumlogic.todo.ui.viewmodels.MainViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/text_task_date"
+                style="@style/Widget.Todo.TaskDate"
+                android:text="@{DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.getDefault()).format(todayDate)}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dim_16"
+                android:layout_marginTop="@dimen/dim_40"
+                app:layout_constraintBottom_toTopOf="@+id/label_task_stats"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="March 9, 2020" />
+
+            <TextView
+                android:id="@+id/label_task_stats"
+                style="@style/Widget.Todo.TaskStats.TaskContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dim_8"
+                android:layout_marginBottom="@dimen/dim_8"
+                android:fontFamily="@font/inter_medium"
+                android:text="@{@string/label_task_stats(viewmodel.incompleteTaskCount,viewmodel.totalTaskCount - viewmodel.incompleteTaskCount )}"
+                app:layout_constraintBottom_toTopOf="@+id/divider"
+                app:layout_constraintStart_toStartOf="@+id/text_task_date"
+                app:layout_constraintTop_toBottomOf="@+id/text_task_date"
+                tools:text="5 incomplete, 5 completed" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/dim_8"
+                android:layout_marginTop="@dimen/dim_8"
+                android:layout_marginBottom="@dimen/dim_8"
+                app:dividerInsetEnd="@dimen/dim_16"
+                app:dividerInsetStart="@dimen/dim_16"
+                app:layout_constraintBottom_toTopOf="@+id/label_incomplete_task"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/label_task_stats" />
+
+            <TextView
+                android:id="@+id/label_incomplete_task"
+                style="@style/Widget.Todo.TaskLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dim_8"
+                android:text="@string/label_incomplete"
+                app:layout_constraintBottom_toTopOf="@+id/list_incomplete_task"
+                app:layout_constraintStart_toStartOf="@+id/label_task_stats"
+                app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+            <TextView
+                android:id="@+id/label_complete_task"
+                style="@style/Widget.Todo.TaskLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dim_16"
+                android:text="@string/label_completed"
+                app:layout_constraintBottom_toTopOf="@+id/list_complete_task"
+                app:layout_constraintStart_toStartOf="@+id/label_incomplete_task"
+                app:layout_constraintTop_toBottomOf="@+id/list_incomplete_task" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list_incomplete_task"
+                android:layout_width="@dimen/dim_0"
+                android:layout_height="@dimen/dim_0"
+                app:layout_constraintBottom_toTopOf="@+id/label_complete_task"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/label_incomplete_task"
+                tools:listitem="@layout/item_task_incomplete" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list_complete_task"
+                android:layout_width="@dimen/dim_0"
+                android:layout_height="@dimen/dim_0"
+                android:layout_marginBottom="@dimen/dim_16"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/label_complete_task"
+                tools:listitem="@layout/item_task_complete" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                app:indicatorColor="?colorPrimary"
+                android:visibility="@{viewmodel.loadingStatus ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/list_complete_task" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="@dimen/dim_32"
+                android:layout_height="@dimen/dim_0"
+                android:scaleType="fitXY"
+                android:visibility="@{(viewmodel.totalTaskCount > 0) ? View.GONE : View.VISIBLE}"
+                app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                app:layout_constraintEnd_toStartOf="@+id/textView2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView2"
+                app:srcCompat="@drawable/outline_note_add_24" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/inter"
+                android:text="@string/no_task_todo"
+                android:textSize="@dimen/dim_30_sp"
+                android:textColor="@color/color_blackwhite_daynight"
+                android:visibility="@{(viewmodel.totalTaskCount > 0) ? View.GONE : View.VISIBLE}"
+                app:layout_constraintBottom_toBottomOf="@+id/list_incomplete_task"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="@+id/list_incomplete_task" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--            android:id="@+id/button_add_task"-->
+<!--            style="@style/Widget.Todo.FloatingActionButton"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginEnd="@dimen/dim_16"-->
+<!--            android:layout_marginBottom="@dimen/dim_44"-->
+<!--            android:clickable="true"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:maxImageSize="@dimen/dim_40"-->
+<!--            app:srcCompat="@drawable/ic_baseline_add_24"-->
+<!--            android:focusable="true" />-->
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_add_task"
+            style="@style/Widget.Todo.FloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dim_32"
+            android:layout_marginBottom="@dimen/dim_44"
+            android:clickable="true"
+            app:maxImageSize="@dimen/dim_40"
+            app:srcCompat="@drawable/ic_baseline_add_24"
+            android:focusable="true"
+            app:layout_anchor="@id/layout_container"
+            android:layout_gravity="bottom|end"
+            app:layout_anchorGravity="bottom|right|end"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

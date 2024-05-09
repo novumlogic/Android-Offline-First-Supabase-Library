@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">TODO App</string>
+    <string name="label_select_date">Select a date</string>
+    <string name="label_incomplete">Incomplete</string>
+    <string name="label_completed">Completed</string>
+    <string name="label_task_stats">%1$d incomplete, %2$d completed</string>
+    <string name="label_save">SAVE</string>
+    <string name="label_new_task">New Task</string>
+    <string name="toast_task_saved">Task saved successfully\n</string>
+    <string name="toast_something_went_wrong">Something went wrong, Try again!\n</string>
+    <string name="device_online">Device online</string>
+    <string name="device_offline">Device offline</string>
+    <string name="no_task_todo">NO TODO\'s</string>
+    <string name="task_priority">Priority: %1$s</string>
+</resources>

@@ -1,0 +1,92 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.serialization'
+    id 'org.jetbrains.kotlin.kapt'
+    id 'androidx.room'
+ }
+
+def apiKeyPropertiesFile = rootProject.file("apikey.properties")
+def apiKeyProperties = new Properties()
+apiKeyProperties.load(new FileInputStream(apiKeyPropertiesFile))
+
+android {
+    namespace 'com.novumlogic.todo'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.novumlogic.todo"
+        minSdk 23
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String","SUPABASE_URL",apiKeyProperties['SUPABASE_URL'])
+        buildConfigField("String","SUPABASE_KEY",apiKeyProperties['SUPABASE_KEY'])
+    }
+    buildFeatures{
+        viewBinding true
+        dataBinding true
+        buildConfig true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    room {
+        schemaDirectory "$projectDir/schemas"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.emoji2:emoji2-emojipicker:1.4.0'
+
+    //offline support library
+    implementation project(":SupabaseOfflineSupport")
+
+    //for supabase
+    implementation platform("io.github.jan-tennert.supabase:bom:2.2.3")
+    implementation 'io.github.jan-tennert.supabase:postgrest-kt'
+    implementation 'io.ktor:ktor-client-android:2.3.9'
+
+
+    //for room components
+    implementation "androidx.room:room-runtime:2.6.1"
+    implementation "androidx.room:room-ktx:2.6.1"
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
+    // To use Kotlin annotation processing tool (kapt)
+    kapt("androidx.room:room-compiler:2.6.1")
+
+
+    //for viewmodel-livedata
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.7.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
+
+    //for latest fragment api
+    implementation "androidx.fragment:fragment-ktx:1.6.2"
+
+    //for coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0'
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}

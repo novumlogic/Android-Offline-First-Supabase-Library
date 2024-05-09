@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape android:shape="rectangle"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<size android:width="@dimen/dim_24" android:height="@dimen/dim_24"/>
+<stroke android:width="@dimen/dim_2" android:color="@color/button_background_task_stroke"/>
+<corners android:radius="@dimen/dim_4"/>
+<solid android:color="@color/button_background_task"/>
+</shape>

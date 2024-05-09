@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="blue_dark">#4A148C</color>
+    <color name="button_background_task_stroke">#292b35</color>
+    <color name="task_tick">#dadada</color>
+    <color name="label_color">#dadada</color>
+    <color name="sublabel_color">#575766</color>
+    <color name="button_background_task">#292b35</color>
+    <color name="task_date_color">#dadada</color>
+    <color name="heading_label_color">#f3f3f3</color>
+    <color name="color_blackwhite_daynight">#ffffff</color>
+
+</resources>

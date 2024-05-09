@@ -1,0 +1,56 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Todo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:statusBarColor">@android:color/transparent
+        </item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Widget.Todo.TaskDate" parent="Widget.MaterialComponents.TextView">
+        <item name="font">@font/inter_bold</item>
+        <item name="fontFamily">@font/inter_bold</item>
+        <item name="android:textColor">@color/task_date_color</item>
+        <item name="android:textSize">@dimen/dim_30_sp</item>
+    </style>
+
+    <style name="Widget.Todo.TaskStats.TaskContent" parent="Widget.MaterialComponents.TextView">
+        <item name="font">@font/inter_medium</item>
+        <item name="fontFamily">@font/inter_medium</item>
+        <item name="android:textColor">@color/label_color</item>
+    </style>
+
+    <style name="Widget.Todo.TaskCategory.CompletedTask" parent="Widget.MaterialComponents.TextView">
+        <item name="font">@font/inter_medium</item>
+        <item name="fontFamily">@font/inter_medium</item>
+        <item name="android:textColor">@color/sublabel_color</item>
+    </style>
+
+    <style name="Widget.Todo.TaskLabel" parent="Widget.MaterialComponents.TextView">
+        <item name="font">@font/inter_bold</item>
+        <item name="fontFamily">@font/inter_bold</item>
+        <item name="android:textSize">@dimen/dim_20_sp</item>
+        <item name="android:textColor">@color/heading_label_color</item>
+    </style>
+
+    <style name="Widget.Todo.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
+<!--        <item name="backgroundColor">@color/blue_dark</item>-->
+<!--        <item name="colorOnSecondary">@color/white</item>-->
+        <item name="materialThemeOverlay">@style/ThemeOverlay.MaterialComponents.FloatingActionButton</item>
+    </style>
+    <style name="ThemeOverlay.MaterialComponents.FloatingActionButton">
+        <item name="colorSecondary">@color/blue_dark</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+    </style>
+
+</resources>

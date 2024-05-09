@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="androidx.lifecycle.LiveData"/>
+        <variable
+            name="viewmodel"
+            type="com.novumlogic.todo.ui.viewmodels.NewTaskViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            >
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar_new_task"
+                style="@style/Widget.MaterialComponents.Toolbar.Surface"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/label_new_task"
+                app:titleCentered="true"
+                app:navigationIcon="@drawable/ic_baseline_close_24"
+                app:menu="@menu/menu_new_task"
+                app:layout_scrollFlags="noScroll"/>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_task_name"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="@dimen/dim_0"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dim_16"
+                app:errorText="@{viewmodel.taskNameError}"
+                app:layout_constraintBottom_toTopOf="@+id/text_input_category"
+                app:layout_constraintEnd_toStartOf="@+id/text_input_priority"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintHorizontal_weight="2.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Task Name"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
+                    android:text="@={viewmodel.taskName}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/text_emoji_display"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dim_0"
+                android:gravity="center"
+                android:text="📃"
+                android:textSize="@dimen/dim_30_sp"
+                app:layout_constraintBottom_toBottomOf="@id/text_input_category"
+                app:layout_constraintEnd_toStartOf="@id/text_input_category"
+                app:layout_constraintStart_toStartOf="@id/text_input_task_name"
+                app:layout_constraintTop_toTopOf="@id/text_input_category" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_category"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="@dimen/dim_0"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dim_16"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="@dimen/dim_16"
+                app:errorText="@{viewmodel.taskCategoryError}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@id/text_emoji_display"
+                app:layout_constraintTop_toBottomOf="@+id/text_input_task_name">
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Task Category"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"
+                    android:text="@={viewmodel.taskCategory}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_priority"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dim_8"
+                app:errorText="@{viewmodel.taskPriorityError}"
+                app:layout_constraintBottom_toTopOf="@+id/text_input_category"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_weight="1.5"
+                app:layout_constraintStart_toEndOf="@+id/text_input_task_name"
+                app:layout_constraintTop_toTopOf="@+id/text_input_task_name"
+                app:layout_constraintVertical_bias="0.0">
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Priority"
+                    android:inputType="none"
+                    android:text="@={viewmodel.taskPriority}" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <androidx.emoji2.emojipicker.EmojiPickerView
+                android:id="@+id/emoji_picker"
+                android:layout_width="@dimen/dim_0"
+                android:layout_height="@dimen/dim_0"
+                android:layout_marginTop="@dimen/dim_8"
+                android:visibility="gone"
+                app:emojiGridRows="3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_input_category" />
+
+            <TextView
+                android:id="@+id/text_task_date_display"
+                style="@style/Widget.Todo.TaskDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                app:layout_constraintBottom_toTopOf="@+id/text_input_task_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="March 9,2020" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

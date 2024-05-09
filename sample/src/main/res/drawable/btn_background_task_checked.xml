@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/btn_background_task_unchecked"/>
+    <item android:drawable="@drawable/ic_baseline_check_24" android:height="@dimen/dim_16" android:width="@dimen/dim_16" android:gravity="center"/>
+</layer-list>
+
