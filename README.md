@@ -505,7 +505,7 @@ The app's data model consists of these tables, each serving a specific purpose i
 
 For information and insights like challenge faced during the development, check out our Medium blog post:
 
-- [Supercharge Your Android App with Offline Capability Using Supabase and Room](link-to-your-medium-blog-post)
+- [Supercharge Your Android App with Offline Capability Using Supabase and Room](https://medium.com/novumlogic/supercharge-your-android-app-with-offline-capability-using-supabase-and-room-47cf93f0374f)
 
 
 
