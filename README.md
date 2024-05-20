@@ -1,12 +1,12 @@
-# Supabase-Offline-Support-Library
+# Android-Offline-First-Supabase-Library
 
 ## Introduction
 This library offers a comprehensive solution for managing offline data synchronization for Android applications. It seamlessly handles data consistency between a local database and a remote Supabase tables, enabling robust offline capabilities that are crucial for mobile applications operating in environments with intermittent connectivity. The library is equipped with utility methods that automatically trigger data synchronization upon detecting network changes, ensuring your application remains up-to-date effortlessly. Additionally, it provides the flexibility to integrate custom synchronization triggers according to specific application needs, such as upon specific user actions, at application launch, or at predetermined intervals. This feature allows developers to maintain control over the synchronization process and tailor it to fit the application's usage patterns and requirements.
 
 ## Tech Stack 
-- Language: Kotlin
-- Local Database: Room Database
-- Remote Database: Supabase
+- Language: [Kotlin](https://kotlinlang.org/docs/home.html)
+- Local Database: [Room Database](https://developer.android.com/training/data-storage/room)
+- Remote Database: [Supabase](https://supabase.com/docs/reference/kotlin/introduction)
 
 ## Features
 - **Offline Data Synchronization:** Ready-to-use data synchronization algorithms to manage local and remote data consistency.
@@ -167,133 +167,7 @@ data class Category(
    }
    ```
 
-    
-6. **RetrofitClient:**  RetrofitClient is a singleton object responsible for setting up and providing a Retrofit client instance for making HTTP requests to Supabase REST API (Used in `syncTosupabase()` of `SyncManager`) 
 
-    - **Properties**
-        - `BASE_URL`: Base URL of the Supabase API.
-        - `apikey`: API key used for authentication with Supabase API.
-
-    - **Methods**
-        - `setupClient(baseUrl: String, apikey: String)`: Sets up the Retrofit client with the provided base URL and API key.
-        - `rClient`: Lazy-initialized property that provides an instance of SupabaseApiService, which is the Retrofit interface for making API calls.
-
-    - **Usage**
-        - To use RetrofitClient:
-            1. **Setup Retrofit Client**: Call `setupClient(baseUrl: String, apikey: String)` to set up the base URL and API key.
-            2. **Access Retrofit Client**: Use the `rClient` property to access the Retrofit client instance and make API calls.
-
-    - **Example**
-        ```kotlin
-        // Set up RetrofitClient
-        RetrofitClient.setupClient(baseUrl = "https://api.supabase.io", apikey = "your_api_key")
-
-        // Access Retrofit client instance
-        val apiService = RetrofitClient.rClient
-
-        // Use apiService to make API calls
-        apiService.getData()
-        ```
-
-        
-7. **SupabaseApiService:** SupabaseApiService is an interface that provides asynchronous methods for performing CRUD operations on Supabase REST API.
-
-    - **Methods**
-        - `insert(tableName: String, data: RequestBody)`: Performs an insert operation on the specified table.
-        - `insertReturnId(tableName: String, data: RequestBody)`: Performs an insert operation on the specified table and returns the ID of the inserted row.
-        - `update(tableName: String, id: Int, data: RequestBody)`: Performs an update operation on the specified table for the row with the given ID.
-        - Other CRUD methods for delete, select, and upsert operations can be defined similarly.
-
-8. **NetworkHelper:** Class that provides utility methods to check internet connectivity and notify observers about network state changes using LiveData.
-
-    - **Properties**
-        - `connectivityManager`: Manages the network connections.
-        - `networkLiveData`: LiveData that represents the current network state.
-
-    - **Methods**
-        - `isNetworkAvailable()`: Checks if the device is connected to the internet.
-        - `getNetworkLiveData()`: Provides LiveData to observe changes in network connectivity.
-
-    - **Usage**
-        - To use NetworkHelper:
-            1. **Initialize**: Create an instance of NetworkHelper by passing the application context.
-            2. **Check Network**: Call `isNetworkAvailable()` to perform instantaneous network checks.
-            3. **Observe Network Changes**: Use `getNetworkLiveData()` to get a LiveData object that updates observers about network state changes.
-
-    - **Example**
-        ```kotlin
-        // Initialization
-        val networkHelper = NetworkHelper(context)
-
-        // Check network availability
-        val isAvailable = networkHelper.isNetworkAvailable()
-
-        // Observe network changes
-        networkHelper.getNetworkLiveData().observe(this, { isConnected ->
-            if (isConnected) {
-                // Network is connected
-            } else {
-                // Network is disconnected
-            }
-        })
-        ```
-
-9. **QueryParamConverter:** It is a custom converter factory used in Retrofit to dynamically modify URLs based on query requirements. It contains annotation classes (`eq`, `lt`, `gt`) to define query parameters for Supabase REST API calls.
-
-    - **Annotation Classes**
-        - `eq`: Indicates equality comparison in query parameters.
-        - `lt`: Indicates less-than comparison in query parameters.
-        - `gt`: Indicates greater-than comparison in query parameters.
-
-    - **Functionality**
-        - `stringConverter(type: Type, annotations: Array<out Annotation>, retrofit: Retrofit)`: Overrides the stringConverter method to provide a custom converter for query parameters.
-            - Returns a Converter to convert query parameter values to string representations based on annotations.
-            - Annotations determine the type of comparison (equality, less-than, greater-than) for the query parameter.
-
-    - **Usage**
-        - To use QueryParamConverter:
-            1. **Define Annotations**: Annotate parameters with `eq`, `lt`, or `gt` to specify query conditions.
-            2. **Apply Converter**: Use QueryParamConverter as a converter factory in Retrofit setup to enable dynamic URL modification based on query parameters.
-
-    - **Example**
-        ```kotlin
-        // Usage of QueryParamConverter annotations
-        interface ApiService {
-              @Headers("Content-Type: application/json", "Prefer: return=minimal")
-              @PATCH("/rest/v1/{table}")
-              suspend fun update(
-                  @Path("table") tableName: String,
-                  @Query("id") @eq id: Int,
-                  @Body data: RequestBody
-              ): Response<Unit>
-        }
-
-        // Retrofit setup with QueryParamConverter
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(QueryParamConverter())
-            .build()
-
-        // Create ApiService instance
-        val apiService = retrofit.create(ApiService::class.java)
-        ```
-
-10. **Utils:** Provides a set of extension functions and data classes to streamline data handling for Supabase API interactions.
-
-    - **Extension Functions**
-        - `decodeSingle(serializer: KSerializer<RDto>): RDto`: Decodes a JSON string into a single instance of type RDto.
-        - `decodeList(serializer: KSerializer<RDto>): List<RDto>`: Decodes a JSON string into a list of instances of type RDto.
-        - `getId()`: Extracts the ID from the response body of a Supabase API call.
-        - `prepareRequestBody(serializer: KSerializer<T>): RequestBody`: Prepares a request body for a Supabase API call, including the ID.
-        - `prepareRequestBodyWithoutId(serializer: KSerializer<T>): RequestBody`: Prepares a request body for a Supabase API call, excluding the ID.
-        - `removeIdFromJson(str: String): String`: Removes the ID field from a JSON string.
-
-    - **Data Classes**
-        - `JsonId`: Represents a JSON object containing an ID.
-        - `JsonError`: Represents a JSON object containing error details from a Supabase API response.
-
-    - **Usage**
-        - These utility functions and data classes are used to simplify data handling for Supabase API interactions. They facilitate parsing JSON responses, preparing request bodies, and extracting IDs, enhancing the efficiency of data exchange with the Supabase backend.
 
 
 ### Todo List Sample App Overview
@@ -501,7 +375,7 @@ The app's data model consists of these tables, each serving a specific purpose i
 7. **Update Last Synced Timestamp:**
   Store the timestamp of last synchronization for each table for future reference.
 
-## Additional Resources
+## Blog post
 
 For information and insights like challenge faced during the development, check out our Medium blog post:
 
