@@ -381,5 +381,42 @@ For information and insights like challenge faced during the development, check 
 
 - [Supercharge Your Android App with Offline Capability Using Supabase and Room](https://medium.com/novumlogic/supercharge-your-android-app-with-offline-capability-using-supabase-and-room-47cf93f0374f)
 
+### Contributing
+
+We are excited to welcome contributions to the Android Offline-First Supabase Library! Whether you're interested in fixing bugs, adding new features, improving documentation, or enhancing the existing code, your efforts are highly appreciated.
+
+#### How to Contribute
+
+1. **Fork the Repository**: Click the "Fork" button at the top right of this page to create a copy of this repository in your GitHub account.
+2. **Clone the Repository**: Clone the forked repository to your local machine using the following command:
+   ```bash
+   git clone https://github.com/your-username/Android-Offline-First-Supabase-Library.git
+   ```
+3. **Create a Branch**: Create a new branch for your feature or bug fix:
+   ```bash
+     git checkout -b feature-or-bugfix-name
+   ```
+4. **Make Your Changes**: Implement your changes and commit them with clear and concise commit messages.
+5. **Push to GitHub**: Push your changes to your forked repository:
+   ```bash
+     git push origin feature-or-bugfix-name
+   ```
+7. **Submit a Pull Request**: Open a pull request from your forked repository's branch to the `main` branch of this repository.
+
+#### Guidelines
+
+- **Code Style**: Ensure your code follows the project's coding style and conventions.
+- **Documentation**: Update documentation to reflect any changes or new features you introduce.
+- **Commits**: Write meaningful commit messages that describe what and why you changed.
+
+#### Feedback and Suggestions
+
+We value your feedback and suggestions! If you have any ideas to improve the project or encounter any issues, please open an issue in the repository.
+
+Thank you for contributing to the Android Offline-First Supabase Library. Your support helps us make this project better for everyone!
+
+Happy coding!
+
+
 
 
